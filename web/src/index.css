@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* This makes sure 1rem = 16px */
+  font-size: 16px;
+
+  color: var(--secondary);
+  background-color: var(--primary);
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Color Variables */
+  --primary: #eeeeee;
+  --dim-primary: #dddddd;
+  --overlay: #fff;
+  --secondary: #242123;
+  --dim-secondary: #635c60;
+  --accent-1: #244130;
+  --accent-2: #205797;
+}
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+a {
+  cursor: pointer;
+  color: var(--off-white);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+}
