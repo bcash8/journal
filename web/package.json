@@ -7,11 +7,26 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "host": "vite --host"
   },
   "dependencies": {
+    "@milkdown/core": "^7.8.0",
+    "@milkdown/crepe": "^7.8.0",
+    "@milkdown/kit": "^7.8.0",
+    "@milkdown/plugin-history": "^7.8.0",
+    "@milkdown/plugin-listener": "^7.8.0",
+    "@milkdown/plugin-tooltip": "^7.8.0",
+    "@milkdown/preset-gfm": "^7.8.0",
+    "@milkdown/react": "^7.8.0",
+    "@milkdown/theme-nord": "^7.8.0",
+    "@phosphor-icons/react": "^2.1.7",
+    "@prosemirror-adapter/react": "^0.4.1",
+    "@types/react-router": "^5.1.20",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router": "^7.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

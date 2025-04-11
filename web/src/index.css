@@ -12,22 +12,28 @@
   /* This makes sure 1rem = 16px */
   font-size: 16px;
 
-  color: var(--secondary);
-  background-color: var(--primary);
+  color: var(--fg);
+  background-color: var(--bg);
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   /* Color Variables */
-  --primary: #eeeeee;
-  --dim-primary: #dddddd;
-  --overlay: #fff;
-  --secondary: #242123;
-  --dim-secondary: #635c60;
-  --accent-1: #244130;
-  --accent-2: #205797;
+  --c-deepblue: #08132a;
+  --c-darkblue: #0d2045;
+  --c-platinum: #e0e2e7;
+  --c-lightblue: #619dee;
+  --c-lightyellow: #619dee;
+
+  --c-darkgray: #1b1c1d;
+  --c-black: #111;
+
+  --fg: var(--c-platinum);
+  --bg: var(--c-black);
+  --border: var(--c-darkgray);
 }
+
 html,
 body,
 #root {
