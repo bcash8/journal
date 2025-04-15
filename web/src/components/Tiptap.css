@@ -1,0 +1,94 @@
+.editor-wrapper {
+  position: relative;
+  height: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.ProseMirror {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  outline: none;
+  cursor: text;
+  min-height: 150px;
+}
+
+.editor-wrapper .tiptap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-wrapper > div:first-child {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Toolbar styles */
+.toolbar {
+  padding: 0.5rem;
+  background: var(--panel);
+  display: flex;
+  justify-content: space-around;
+}
+
+.toolbar button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg);
+  background: var(--panel-light);
+  border: none;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.mobile-toolbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--panel);
+  z-index: 9999;
+  transition: bottom 0.3s ease;
+}
+
+/* Tip tap styles */
+
+.tiptap ul,
+.tiptap ol {
+  list-style-position: inside;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.tiptap li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1.5rem;
+}
+
+.tiptap ul li::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* transform: translateY(-50%); */
+  content: "•";
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.tiptap ol li::after {
+  position: absolute;
+  inset: 0;
+  content: counter(list-item) ". ";
+  counter-increment: list-item;
+  font-size: 1rem;
+}

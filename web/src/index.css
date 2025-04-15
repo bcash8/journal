@@ -27,11 +27,14 @@
   --c-lightyellow: #619dee;
 
   --c-darkgray: #1b1c1d;
+  --c-darkishgray: hsl(210, 3%, 15%);
   --c-black: #111;
 
   --fg: var(--c-platinum);
   --bg: var(--c-black);
-  --border: var(--c-darkgray);
+  --panel: var(--c-darkgray);
+  --panel-light: var(--c-darkishgray);
+  --button: var(--c-platinum);
 }
 
 html,
