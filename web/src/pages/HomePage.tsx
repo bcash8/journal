@@ -34,7 +34,7 @@ export function HomePage() {
         <h2 className={styles.recentListTitle}>Recent Notes</h2>
         <ul className={styles.recentList}>
           {notes.map((note) => (
-            <li key={note.id}>
+            <li key={note.id} onClick={() => navigate(`/editor/${note.id}`)}>
               <NoteIcon size={25} />
               <div>
                 <span>{note.title}</span>

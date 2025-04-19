@@ -8,9 +8,17 @@ export function MobileNavbar() {
 
   useEffect(() => {
     function onClickOutside(e: MouseEvent) {
-      if (navbarRef.current === null) return;
-      if (e.target instanceof Node && navbarRef.current.contains(e.target)) return;
-      setOpen(false);
+      if (!(e.target instanceof Node)) return;
+
+      // Close if clicked outside navbar
+      if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+        setOpen(false);
+        return;
+      }
+
+      // Close if clicked on an <a> tag
+      const anchor = e.target instanceof HTMLElement ? e.target.closest("a") : undefined;
+      if (anchor) setOpen(false);
     }
     document.addEventListener("mousedown", onClickOutside);
 
