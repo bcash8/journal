@@ -1,9 +1,8 @@
-import { useCurrentEditor } from "@tiptap/react";
+import { Editor } from "@tiptap/react";
 import { useEffect, useState } from "react";
 import { ListBullets, ListNumbers, TextB, TextItalic } from "@phosphor-icons/react";
 
-export function EditorToolbar() {
-  const { editor } = useCurrentEditor();
+export function EditorToolbar({ editor }: { editor: Editor }) {
   const [visible, setVisible] = useState(false);
   const [bottomOffset, setBottomOffset] = useState(0);
 

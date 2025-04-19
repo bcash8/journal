@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.newNoteButton {
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  font-size: 2rem;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: var(--panel);
+  border: none;
+}

@@ -19,11 +19,15 @@
     "@tiptap/pm": "^2.11.7",
     "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
+    "@types/dexie": "^1.3.35",
     "@types/react-router": "^5.1.20",
     "dayjs": "^1.11.13",
+    "dexie": "^4.0.11",
+    "dexie-react-hooks": "^1.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.5.0"
+    "react-router": "^7.5.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

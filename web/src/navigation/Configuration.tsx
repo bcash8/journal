@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { EditorPage } from "../pages/EditorPage";
+import { HomePage } from "../pages/HomePage";
 
 type RouteConfiguration = {
   label: string;
@@ -12,9 +13,18 @@ export const configuration: RouteConfiguration[] = [
     label: "Home",
     element: (
       <>
-        <EditorPage />
+        <HomePage />
       </>
     ),
     path: "/"
+  },
+  {
+    label: "Editor",
+    element: (
+      <>
+        <EditorPage />
+      </>
+    ),
+    path: "/editor/:noteId"
   }
 ];

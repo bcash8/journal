@@ -1,19 +1,44 @@
-import { EditorProvider } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { EditorContent, useEditor } from "@tiptap/react";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import ListItem from "@tiptap/extension-list-item";
+import BulletList from "@tiptap/extension-bullet-list";
+import Orderedlist from "@tiptap/extension-ordered-list";
 
 import "./Tiptap.css";
 import { EditorToolbar } from "./EditorToolbar";
+import { useEffect } from "react";
+import { getNote, saveNote } from "../db/notesDB";
 
-const extensions = [StarterKit];
+export function Tiptap({ noteId }: { noteId: string }) {
+  const editor = useEditor({
+    extensions: [Text, Document, Paragraph, Bold, Italic, ListItem, BulletList, Orderedlist],
+    content: "",
+    onUpdate({ editor }) {
+      saveNote(noteId, JSON.stringify(editor.getJSON()));
+    }
+  });
 
-const content = "<p>Hello World!</p>";
+  useEffect(() => {
+    async function load() {
+      const note = await getNote(noteId);
+      if (note && editor) {
+        const content = JSON.parse(note.content);
+        editor.commands.setContent(content);
+      }
+    }
 
-export function Tiptap() {
+    load();
+  }, [noteId, editor]);
+
+  if (!editor) return <div>Loading editor...</div>;
   return (
     <div className="editor-wrapper">
-      <EditorProvider extensions={extensions} content={content}>
-        <EditorToolbar />
-      </EditorProvider>
+      <EditorContent editor={editor} />
+      <EditorToolbar editor={editor} />
     </div>
   );
 }
