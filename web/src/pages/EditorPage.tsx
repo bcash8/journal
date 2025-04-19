@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import styles from "./EditorPage.module.css";
 import { useParams } from "react-router";
 import { db } from "../db/notesDB";
@@ -9,7 +9,7 @@ const TiptapEditor = lazy(() => import("../components/Tiptap").then((module) => 
 export function EditorPage() {
   const { noteId } = useParams();
   const [noteTitle, setNoteTitle] = useState<string>("");
-  const [syncTimoutId, setSyncTimeoutId] = useState<number | null>(null);
+  const syncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     async function syncNote() {
@@ -27,9 +27,8 @@ export function EditorPage() {
     setNoteTitle(newTitle);
 
     // Debounce updates to db
-    if (syncTimoutId) clearTimeout(syncTimoutId);
-    const timeoutId = setTimeout(() => db.notes.update(noteId, { title: newTitle }), 500);
-    setSyncTimeoutId(timeoutId);
+    if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+    syncTimeoutRef.current = setTimeout(() => db.notes.update(noteId, { title: newTitle }), 500);
   }
 
   if (noteId === undefined) return <>Unknown note</>;

@@ -10,20 +10,19 @@ import Orderedlist from "@tiptap/extension-ordered-list";
 
 import "./Tiptap.css";
 import { EditorToolbar } from "./EditorToolbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { getNote, saveNote } from "../db/notesDB";
 
 export function Tiptap({ noteId }: { noteId: string }) {
-  const [syncTimeoutId, setSyncTimoutId] = useState<number | null>(null);
+  const syncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const editor = useEditor({
     extensions: [Text, Document, Paragraph, Bold, Italic, ListItem, BulletList, Orderedlist],
     content: "",
     onUpdate({ editor }) {
       // Debounce updates to database
-      if (syncTimeoutId) clearTimeout(syncTimeoutId);
-      const timoutId = setTimeout(() => saveNote(noteId, JSON.stringify(editor.getJSON())), 500);
-      setSyncTimoutId(timoutId);
+      if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
+      syncTimeoutRef.current = setTimeout(() => saveNote(noteId, JSON.stringify(editor.getJSON())), 500);
     }
   });
 
