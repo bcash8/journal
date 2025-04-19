@@ -35,6 +35,7 @@
   --panel: var(--c-darkgray);
   --panel-light: var(--c-darkishgray);
   --button: var(--c-platinum);
+  --button-outline: var(--c-lightblue);
 }
 
 html,
@@ -53,5 +54,15 @@ a:hover {
 }
 
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   cursor: pointer;
+  background: none;
+  color: var(--button);
+  border: 1px solid var(--button-outline);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  font-size: 1rem;
 }
