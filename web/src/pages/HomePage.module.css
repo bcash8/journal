@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
 }
@@ -16,4 +16,63 @@
   right: 20px;
   background: var(--panel);
   border: none;
+}
+
+.recentListContainer {
+  width: 100%;
+}
+
+.recentListTitle {
+  font-size: 1rem;
+  color: var(--panel-fg-2);
+  margin-bottom: 0.25rem;
+}
+
+.recentList {
+  background: var(--panel);
+  list-style-type: none;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.recentList li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  position: relative;
+  width: 100%;
+}
+
+.recentList li > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.recentList li > div > span:last-child {
+  color: var(--panel-fg-2);
+}
+
+.recentList li > *:first-child {
+  color: var(--panel-fg-2);
+}
+
+.recentList li::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: var(--panel-fg-1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.recentList li:last-child::after {
+  height: 0;
 }

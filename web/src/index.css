@@ -28,12 +28,14 @@
 
   --c-darkgray: #1b1c1d;
   --c-darkishgray: hsl(210, 3%, 15%);
+  --c-lightgray: hsl(210, 3%, 28%);
   --c-black: #111;
 
   --fg: var(--c-platinum);
   --bg: var(--c-black);
   --panel: var(--c-darkgray);
-  --panel-light: var(--c-darkishgray);
+  --panel-fg-1: var(--c-darkishgray);
+  --panel-fg-2: var(--c-lightgray);
   --button: var(--c-platinum);
   --button-outline: var(--c-lightblue);
 }

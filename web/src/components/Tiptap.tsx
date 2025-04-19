@@ -23,7 +23,9 @@ export function Tiptap({ noteId }: { noteId: string }) {
       // Debounce updates to database
       if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
       syncTimeoutRef.current = setTimeout(() => saveNote(noteId, JSON.stringify(editor.getJSON())), 500);
-    }
+    },
+    immediatelyRender: true,
+    shouldRerenderOnTransaction: false
   });
 
   useEffect(() => {

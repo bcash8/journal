@@ -1,9 +1,27 @@
 import { useNavigate } from "react-router";
-import { createNote } from "../db/notesDB";
+import { createNote, db, Note } from "../db/notesDB";
 import styles from "./HomePage.module.css";
-import { NotePencil } from "@phosphor-icons/react";
+import { Note as NoteIcon, NotePencil } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
+import dayjs from "dayjs";
+
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
+
 export function HomePage() {
   const navigate = useNavigate();
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    async function fetchNotes() {
+      const notes = await db.notes.orderBy("updatedAt").reverse().limit(4).toArray();
+      setNotes(notes);
+    }
+
+    fetchNotes();
+  }, []);
 
   async function newNote() {
     const id = await createNote();
@@ -12,10 +30,42 @@ export function HomePage() {
 
   return (
     <main className={`page ${styles.main}`}>
-      <h2>Recent Notes</h2>
+      <div className={styles.recentListContainer}>
+        <h2 className={styles.recentListTitle}>Recent Notes</h2>
+        <ul className={styles.recentList}>
+          {notes.map((note) => (
+            <li key={note.id}>
+              <NoteIcon size={25} />
+              <div>
+                <span>{note.title}</span>
+                <span>{formatDate(note.updatedAt)}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
       <button onClick={newNote} className={styles.newNoteButton}>
         <NotePencil size={40} />
       </button>
     </main>
   );
+}
+
+function formatDate(dateString: string) {
+  const date = dayjs(dateString);
+  const now = dayjs();
+
+  if (date.isToday()) {
+    return `Today, ${date.format("h:mm A")}`;
+  }
+
+  if (date.isYesterday()) {
+    return `Yesterday, ${date.format("h:mm A")}`;
+  }
+
+  if (date.isAfter(now.subtract(7, "day"))) {
+    return date.format("dddd, h:mm A");
+  }
+
+  return date.format("MMM D, YYYY, h:mm A");
 }

@@ -24,7 +24,7 @@ export const db = new NotesDexie();
 
 export async function createNote() {
   const id = v4();
-  const timestamp = Date.now().toString();
+  const timestamp = new Date().toISOString();
   await db.notes.add({
     id,
     title: "Untitled",
@@ -40,7 +40,7 @@ export async function createNote() {
 }
 
 export async function saveNote(id: string, content: string, title?: string) {
-  const updatedAt = Date.now().toString();
+  const updatedAt = new Date().toISOString();
   await db.notes.update(id, { content, updatedAt, ...(title ? { title } : {}) });
 }
 
