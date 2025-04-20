@@ -5,6 +5,9 @@
   flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
+  border: 1px solid var(--panel);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .ProseMirror {
