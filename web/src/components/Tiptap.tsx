@@ -11,9 +11,11 @@ import Orderedlist from "@tiptap/extension-ordered-list";
 import "./Tiptap.css";
 import { EditorToolbar } from "./EditorToolbar";
 import { useEffect, useRef } from "react";
-import { getNote, saveNote } from "../db/notesDB";
+import { saveNote } from "../db/notesDB";
+import { useNote } from "../hooks/useNote";
 
-export function Tiptap({ noteId }: { noteId: string }) {
+export function Tiptap() {
+  const note = useNote();
   const syncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const editor = useEditor({
@@ -22,7 +24,10 @@ export function Tiptap({ noteId }: { noteId: string }) {
     onUpdate({ editor }) {
       // Debounce updates to database
       if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
-      syncTimeoutRef.current = setTimeout(() => saveNote(noteId, JSON.stringify(editor.getJSON())), 500);
+      syncTimeoutRef.current = setTimeout(
+        () => note.note && saveNote(note.note.id, JSON.stringify(editor.getJSON())),
+        500
+      );
     },
     immediatelyRender: true,
     shouldRerenderOnTransaction: false
@@ -30,15 +35,14 @@ export function Tiptap({ noteId }: { noteId: string }) {
 
   useEffect(() => {
     async function load() {
-      const note = await getNote(noteId);
-      if (note && editor) {
-        const content = JSON.parse(note.content);
+      if (note.note && editor) {
+        const content = JSON.parse(note.note.content);
         editor.commands.setContent(content);
       }
     }
 
     load();
-  }, [noteId, editor]);
+  }, [editor, note.note]);
 
   if (!editor) return <div>Loading editor...</div>;
   return (

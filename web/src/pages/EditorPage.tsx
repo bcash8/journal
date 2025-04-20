@@ -3,35 +3,39 @@ import styles from "./EditorPage.module.css";
 import { useParams } from "react-router";
 import { db } from "../db/notesDB";
 import { Pencil } from "@phosphor-icons/react";
+import { NoteTags } from "../components/NoteTags/NoteTags";
+import { NoteContextProvider } from "../context/NoteContextProvider";
+import { useNote } from "../hooks/useNote";
 
 const TiptapEditor = lazy(() => import("../components/Tiptap").then((module) => ({ default: module.Tiptap })));
 
 export function EditorPage() {
   const { noteId } = useParams();
+
+  if (noteId === undefined) return <></>;
+
+  return (
+    <NoteContextProvider noteId={noteId}>
+      <EditorPageContent />
+    </NoteContextProvider>
+  );
+}
+
+export function EditorPageContent() {
+  const note = useNote();
   const [noteTitle, setNoteTitle] = useState<string>("");
   const syncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    async function syncNote() {
-      if (noteId === undefined) return;
-
-      const note = await db.notes.get(noteId);
-      setNoteTitle(note?.title ?? "");
-    }
-
-    syncNote();
-  }, [noteId]);
+    setNoteTitle(note.note?.title ?? "");
+  }, [note.note?.title]);
 
   function titleUpdate(newTitle: string) {
-    if (noteId === undefined) return;
     setNoteTitle(newTitle);
-
     // Debounce updates to db
     if (syncTimeoutRef.current) clearTimeout(syncTimeoutRef.current);
-    syncTimeoutRef.current = setTimeout(() => db.notes.update(noteId, { title: newTitle }), 500);
+    syncTimeoutRef.current = setTimeout(() => note.note && db.notes.update(note.note.id, { title: newTitle }), 500);
   }
-
-  if (noteId === undefined) return <>Unknown note</>;
 
   return (
     <main className={styles.container}>
@@ -39,8 +43,9 @@ export function EditorPage() {
         <input value={noteTitle} onChange={(e) => titleUpdate(e.target.value)} />
         <Pencil size={20} />
       </div>
+      <NoteTags />
       <Suspense fallback={<div>Loading editor...</div>}>
-        <TiptapEditor noteId={noteId} />
+        <TiptapEditor />
       </Suspense>
     </main>
   );
