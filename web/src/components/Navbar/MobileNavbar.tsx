@@ -18,7 +18,7 @@ export function MobileNavbar() {
 
       // Close if clicked on an <a> tag
       const anchor = e.target instanceof HTMLElement ? e.target.closest("a") : undefined;
-      if (anchor) setOpen(false);
+      if (anchor) setTimeout(() => setOpen(false), 100);
     }
     document.addEventListener("mousedown", onClickOutside);
 
