@@ -66,6 +66,10 @@
   transition: bottom 0.3s ease;
 }
 
+.toolbar button.option-active {
+  /* Empty for now */
+}
+
 /* Tip tap styles */
 
 .tiptap ul,

@@ -1,6 +1,6 @@
+import { ListBullets, ListNumbers, TextB, TextItalic } from "@phosphor-icons/react";
 import { Editor } from "@tiptap/react";
 import { useEffect, useState } from "react";
-import { ListBullets, ListNumbers, TextB, TextItalic } from "@phosphor-icons/react";
 
 export function EditorToolbar({ editor }: { editor: Editor }) {
   const [visible, setVisible] = useState(false);
@@ -49,17 +49,29 @@ export function EditorToolbar({ editor }: { editor: Editor }) {
   if (!visible || !editor) return null;
 
   return (
-    <div className="mobile-toolbar toolbar" style={{ bottom: `${bottomOffset}px` }}>
-      <button onClick={() => editor.chain().focus().toggleBold().run()}>
+    <div className={`mobile-toolbar toolbar`} style={{ bottom: `${bottomOffset}px` }}>
+      <button
+        className={editor.isActive("bold") ? "option-active" : ""}
+        onClick={() => editor.chain().focus().toggleBold().run()}
+      >
         <TextB />
       </button>
-      <button onClick={() => editor.chain().focus().toggleItalic().run()}>
+      <button
+        className={editor.isActive("italic") ? "option-active" : ""}
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+      >
         <TextItalic />
       </button>
-      <button onClick={() => editor.chain().focus().toggleBulletList().run()}>
+      <button
+        className={editor.isActive("bulletList") ? "option-active" : ""}
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+      >
         <ListBullets />
       </button>
-      <button onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+      <button
+        className={editor.isActive("orderedList") ? "option-active" : ""}
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+      >
         <ListNumbers />
       </button>
     </div>
