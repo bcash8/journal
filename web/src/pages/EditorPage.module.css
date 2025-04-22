@@ -22,6 +22,11 @@
   justify-content: flex-start;
   gap: 1rem;
   border-bottom: 1px solid var(--panel);
+  transition: 0.2s ease-in-out;
+}
+
+.titleInput:focus-within {
+  border-bottom-color: var(--fg);
 }
 
 .titleInput > input {
@@ -29,4 +34,5 @@
   background: none;
   font-weight: 600;
   font-size: 1.3rem;
+  outline: none;
 }

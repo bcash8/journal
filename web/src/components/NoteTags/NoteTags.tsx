@@ -1,22 +1,26 @@
-import { Plus, Tag } from "@phosphor-icons/react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { CheckCircle, Pencil, Plus, Tag as TagIcon } from "@phosphor-icons/react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { useState } from "react";
+import { v4 } from "uuid";
+import { db, tagNote, untagNote } from "../../db/notesDB";
 import { useNote } from "../../hooks/useNote";
+import { Modal } from "../Modal/Modal";
 import styles from "./NoteTags.module.css";
 
 export function NoteTags() {
   const note = useNote();
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
       <div className={styles.noteContainer}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <h3 style={{ display: "flex", alignItems: "center" }}>
-            <Tag size={28} />
+            <TagIcon size={28} />
           </h3>
           <button onClick={() => setModalOpen(true)}>
-            New
-            <Plus weight="bold" />
+            Add
+            <Plus />
           </button>
         </div>
         <ul>
@@ -27,42 +31,75 @@ export function NoteTags() {
       </div>
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-          <p>content</p>
+          <div className={styles.modalContent}>
+            <AddTag />
+            <ExistingTagSelection />
+          </div>
         </Modal>
       )}
     </>
   );
 }
 
-function Modal({ isOpen, onClose, children }: { isOpen: boolean; onClose?: () => void; children?: ReactNode }) {
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
+function ExistingTagSelection() {
+  const tags = useLiveQuery(
+    () => db.tags.toArray().then((tags) => tags.sort((a, b) => a.name.localeCompare(b.name))),
+    []
+  );
+  const note = useNote();
 
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (isOpen) {
-      dialog.showModal();
+  async function handleTagClick(id: string) {
+    if (!note || !note.note) return;
+    if (note.tags?.some((tag) => tag.id === id)) {
+      await untagNote(note.note.id, id);
     } else {
-      dialog.close();
+      await tagNote(note.note.id, id);
     }
+  }
 
-    function handleClickOutside(e: MouseEvent) {
-      if (contentRef.current && e.target instanceof Node && !contentRef.current.contains(e.target)) onClose?.();
-    }
-
-    dialog.addEventListener("click", handleClickOutside);
-    return () => {
-      dialog.removeEventListener("click", handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+  if (!tags || !note) return <>Loading</>;
 
   return (
-    <dialog ref={dialogRef} onCancel={onClose} className={styles.modal}>
-      <div ref={contentRef} className={`${styles.content}`}>
-        {children}
+    <div className={styles.exisitingTagContainer}>
+      <h4>Existing Tags</h4>
+      <ul>
+        {tags.map((tag, i) => (
+          <li
+            key={i}
+            className={`${styles.tagItem} ${
+              note.tags?.some((noteTag) => noteTag.id === tag.id) ? styles.appliedTag : ""
+            }`}
+            onClick={() => handleTagClick(tag.id)}
+          >
+            {tag.name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function AddTag() {
+  const [tagName, setTagName] = useState("");
+
+  async function addTag() {
+    const id = v4();
+    await db.tags.add({ id, name: tagName });
+    setTagName("");
+  }
+
+  return (
+    <div className={styles.addTagContainer}>
+      <h4>New Tag</h4>
+      <div className={styles.addTagInputRow}>
+        <div className={styles.titleInput}>
+          <input value={tagName} onChange={(e) => setTagName(e.target.value)} />
+          <Pencil size={20} />
+        </div>
+        <button className={styles.addTagApplyButton} disabled={tagName === ""} onClick={addTag}>
+          <CheckCircle size={28} />
+        </button>
       </div>
-    </dialog>
+    </div>
   );
 }

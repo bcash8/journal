@@ -1,26 +1,15 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useLiveQuery } from "dexie-react-hooks";
+import { ReactNode } from "react";
+import { getNote, getTagsForNote } from "../db/notesDB";
 import { NoteContext } from "./NoteContext";
-import { getNote, getTagsForNote, Note, Tag } from "../db/notesDB";
 
 export function NoteContextProvider({ noteId, children }: { noteId: string; children: ReactNode }) {
-  const [note, setNote] = useState<Note | null>(null);
-  const [tags, setTags] = useState<Tag[] | null>(null);
-
-  useEffect(() => {
-    async function syncNoteDetails() {
-      const note = await getNote(noteId);
-      const tags = await getTagsForNote(noteId);
-      if (note === undefined) return;
-      setNote(note);
-      setTags(tags);
-    }
-
-    syncNoteDetails();
-  }, [noteId]);
+  const note = useLiveQuery(() => getNote(noteId), [noteId]);
+  const tags = useLiveQuery(() => getTagsForNote(noteId), [noteId]);
 
   const context = {
-    note,
-    tags
+    note: note ?? null,
+    tags: tags ?? null
   };
   return <NoteContext.Provider value={context}>{children}</NoteContext.Provider>;
 }
