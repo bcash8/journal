@@ -8,6 +8,11 @@
   border: 1px solid var(--panel);
   border-radius: 0.5rem;
   padding: 0.5rem;
+  transition: 0.2s ease-in-out;
+}
+
+.editor-wrapper:focus-within {
+  border: 1px solid var(--panel-fg-2);
 }
 
 .ProseMirror {
