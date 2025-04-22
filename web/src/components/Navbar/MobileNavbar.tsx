@@ -1,7 +1,8 @@
+import { House, List } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import styles from "./MobileNavbar.module.css";
-import { House, List } from "@phosphor-icons/react";
+
 export function MobileNavbar() {
   const [open, setOpen] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -34,10 +35,6 @@ export function MobileNavbar() {
       </button>
       {open && (
         <nav ref={navbarRef} className={styles.navbar}>
-          <Link to="/">
-            <House size={30} />
-            Home
-          </Link>
           <Link to="/">
             <House size={30} />
             Home

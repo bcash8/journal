@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar a {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  gap: 0.25rem;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
+}
