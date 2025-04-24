@@ -1,11 +1,11 @@
+import { Note as NoteIcon, NotePencil } from "@phosphor-icons/react";
+import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { createNote, db, Note } from "../db/notesDB";
 import styles from "./HomePage.module.css";
-import { Note as NoteIcon, NotePencil } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
-import isToday from "dayjs/plugin/isToday";
-import isYesterday from "dayjs/plugin/isYesterday";
-import dayjs from "dayjs";
 
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
@@ -16,7 +16,7 @@ export function HomePage() {
 
   useEffect(() => {
     async function fetchNotes() {
-      const notes = await db.notes.orderBy("updatedAt").reverse().limit(4).toArray();
+      const notes = await db.notes.orderBy("updatedAt").reverse().limit(10).toArray();
       setNotes(notes);
     }
 

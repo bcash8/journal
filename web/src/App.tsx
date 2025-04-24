@@ -1,11 +1,11 @@
-import "./App.css";
 import { BrowserRouter } from "react-router";
-import { Router } from "./navigation/Router";
+import "./App.css";
 import { Header } from "./components/Header/Header";
+import { Router } from "./navigation/Router";
 
 function Layout() {
   return (
-    <div>
+    <div className="app-layout">
       <Header />
       <Router />
     </div>

@@ -1,35 +1,42 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  width: 95%;
-  max-width: 1000px;
-  margin: auto;
-  position: relative;
-  height: 100%;
-}
-
-.newNoteButton {
-  border-radius: 0.5rem;
-  padding: 0.25rem;
-  font-size: 2rem;
-  position: fixed;
-  bottom: 1rem;
-  right: 1.5rem;
-  background: var(--c-darkblue);
-  box-shadow: 0 0 2px #00000050;
-  border: none;
-}
-
-.recentListContainer {
-  width: 100%;
-}
-
-.recentListTitle {
+.title {
   font-size: 1rem;
   color: var(--panel-fg-2);
   margin-bottom: 0.25rem;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 0 1rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--panel);
+}
+
+.inputContainer > input {
+  height: 44px;
+  font-size: 1.2rem;
+  outline: none;
+  padding: 0.25rem;
+}
+
+.inputContainer > input:focus {
+  outline: none;
+}
+
+.inputContainer > select {
+  height: 44px;
+  background: var(--panel);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--fg);
+  font-size: 1rem;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.inputContainer > select:focus {
+  outline: none;
 }
 
 .recentList {

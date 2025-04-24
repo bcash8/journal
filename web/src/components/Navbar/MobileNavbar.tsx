@@ -1,4 +1,4 @@
-import { House, List } from "@phosphor-icons/react";
+import { House, List, MagnifyingGlass } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import styles from "./MobileNavbar.module.css";
@@ -38,6 +38,10 @@ export function MobileNavbar() {
           <Link to="/">
             <House size={30} />
             Home
+          </Link>
+          <Link to="/search">
+            <MagnifyingGlass size={30} />
+            Search
           </Link>
         </nav>
       )}

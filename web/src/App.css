@@ -1,4 +1,14 @@
 .page {
+  padding: 1rem;
   width: 95%;
+  max-width: 1000px;
   margin: auto;
+  height: 100%;
+}
+
+.app-layout {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: 100%;
 }

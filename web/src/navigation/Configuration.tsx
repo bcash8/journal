@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { EditorPage } from "../pages/EditorPage";
 import { HomePage } from "../pages/HomePage";
+import { SearchNotesPage } from "../pages/SearchNotesPage";
 
 type RouteConfiguration = {
   label: string;
@@ -26,5 +27,14 @@ export const configuration: RouteConfiguration[] = [
       </>
     ),
     path: "/editor/:noteId"
+  },
+  {
+    label: "Search Notes",
+    element: (
+      <>
+        <SearchNotesPage />
+      </>
+    ),
+    path: "/search"
   }
 ];
